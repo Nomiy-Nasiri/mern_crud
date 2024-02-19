@@ -12,18 +12,3 @@ const userSchema = new Schema({
 const UserModel = mongoose.model('User', userSchema);
 
 module.exports = UserModel;
-
-
-
-
-// const mongoose = require("mongoose")
-
-// const UserSchema = new mongoose.Schema({
-//     name: String,
-//     email: String,
-//     age: Number,
-//     phone: Number
-// })
-
-// const UserModel = mongoose.model("url", UserSchema)
-// module.export = UserModel

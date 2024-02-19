@@ -7,7 +7,7 @@ const User = () => {
 
   const [users, setUsers] = useState([])
   useEffect(() => {
-    axios.get("http://localhost:5000/users") // Changed the endpoint to "/users"
+    axios.get("http://localhost:5000/users") 
       .then(result => {
         setUsers(result.data)
         console.log(result.data)
@@ -15,18 +15,6 @@ const User = () => {
       .catch(err => console.log(err));
   }, []);
  
- 
- 
-  // useEffect(() => {
-  //   axios.get("http://localhost:5000")
-  //     .then(result => {
-  //       setUsers(result.data)
-  //       console.log(result.data)
-  //         .catch(err => console.log(err))
-  //     })
-  // }, [])
-  
-
    const handleDelete = () => {
     //delete user function will be in this row
    }
