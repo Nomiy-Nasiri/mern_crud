@@ -7,17 +7,26 @@ const User = () => {
 
   const [users, setUsers] = useState([])
   useEffect(() => {
-    axios.get("http://localhost:5000/users") 
+    axios.get("http://localhost:5000/users")
       .then(result => {
         setUsers(result.data)
         console.log(result.data)
       })
       .catch(err => console.log(err));
   }, []);
- 
-   const handleDelete = () => {
-    //delete user function will be in this row
-   }
+
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:5000/deleteUser/${id}`)
+      .then(response => {
+        console.log(response.data.message); // Output success message
+        // Optionally, update the UI to reflect the deletion
+      })
+      .catch(error => {
+        console.error("Error deleting user:", error.response.data.message);
+        // Handle error, such as showing an error message to the user
+      });
+  };
+  
   return (
     <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
       <div className='w-50 bg-white rounded p-3'>
@@ -43,7 +52,7 @@ const User = () => {
                   <td>
                     {/* <Link to={`/update/${user._id}`} className='btn btn-success '> Edit +</Link> */}
                     <Link to={`/update/${user._id}`} className='btn btn-success'>Edit</Link>
-                    <button className='btn btn-danger' onClick={(e)=>handleDelete(user._id)}>Delete</button>
+                    <button className='btn btn-danger' onClick={(e) => handleDelete(user._id)}>Delete</button>
                   </td>
                 </tr>
               </tbody>

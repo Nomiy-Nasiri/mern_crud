@@ -1,6 +1,6 @@
 
 const express = require('express');
-const mongoose = require('mongoose'); // Corrected typo
+const mongoose = require('mongoose'); 
 const cors = require('cors');
 const UserModel = require('./models/Users');
 
@@ -12,7 +12,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/crud');
 
 app.post("/createUser", (req, res) => {
     UserModel.create(req.body)
-        .then(users => res.json(users)) // Corrected response method
+        .then(users => res.json(users))
         .catch(err => res.json(err));
 });
 
@@ -23,15 +23,15 @@ app.get("/users", (req, res) => {
 });
 
 app.get("/getUser/:id", (req, res) => {
-    const id = req.params.id; // Corrected parameter access
-    UserModel.findById(id) // Corrected parameter access
+    const id = req.params.id;
+    UserModel.findById(id) 
         .then(users => res.json(users))
         .catch(err => res.json(err));
 });
 
 app.put("/updateUser/:id", (req, res) => {
-    const id = req.params.id; // Corrected parameter access
-    UserModel.findByIdAndUpdate(id, { // Corrected method name
+    const id = req.params.id; 
+    UserModel.findByIdAndUpdate(id, { 
         name: req.body.name,
         email: req.body.email,
         phone: req.body.phone,
@@ -39,6 +39,19 @@ app.put("/updateUser/:id", (req, res) => {
     }, { new: true })
         .then(users => res.json(users))
         .catch(err => res.json(err));
+});
+
+
+app.delete("/deleteUser/:id", (req, res) => {
+    const id = req.params.id; 
+    UserModel.findByIdAndDelete(id)
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+            res.json({ message: "User deleted successfully" });
+        })
+        .catch(err => res.status(500).json({ message: "Internal server error" }));
 });
 
 app.listen(5000, () => {
